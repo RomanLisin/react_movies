@@ -1,0 +1,9 @@
+.movies
+{
+    display: flex;
+    flex-wrap: wrap;  /* если убираем фильмы выстраиваются в одну строку*/
+    justify-content: space-around;
+     /* background: #ffffff; */
+     background: #2e3638;
+ 
+}
