@@ -1,4 +1,11 @@
-
+.preloader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Занимает всю высоту окна */
+  width: 100%;
+   background: transparent;/* #0f4ac9;  */
+}
 .lds-ring,
 .lds-ring div {
   box-sizing: border-box;
@@ -6,6 +13,7 @@
 .lds-ring {
   display: inline-block;
   position: relative;
+  color:rgb(0,91,151);
   width: 80px;
   height: 80px;
 }

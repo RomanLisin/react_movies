@@ -5,10 +5,12 @@ import MovieList from './components/MovieList';
 import Preloader from './components/Preloader';
 
 class Main extends React.Component {
+moviesContainerRef = React.createRef();
+
   state = {
     allMovies: [],        // все фильмы (до 100)
     displayedMovies: [],  // фильмы для текущей "логической" страницы (12 шт)
-    loading: false,
+    loading: true,
     error: null,
     searchQuery: 'matrix',
     currentPage: 1,       // "логическая" страница (по 12 фильмов)
@@ -52,10 +54,9 @@ class Main extends React.Component {
         }
       }
 
-      // Обрезаем до максимума (на всякий случай)
+      // обрезаем до максимума (на всякий случай)
       allMovies = allMovies.slice(0, 100);
 
-      // Обновляем состояние
       this.setState({
         allMovies,
         totalResults: Math.min(total, 100),
@@ -63,6 +64,12 @@ class Main extends React.Component {
       }, () => {
         // после обновления allMovies показываем первую "логическую" страницу
         this.updateDisplayedMovies(1);
+        setTimeout(() => {
+            this.moviesContainerRef.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 0);
       });
 
     } catch (error) {
@@ -105,12 +112,22 @@ class Main extends React.Component {
 
   handlePageChange =  (newPage) => {
     this.updateDisplayedMovies(newPage);
+    setTimeout(() => {
+        this.moviesContainerRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }, 0);
   };
 
   render() {
     const { displayedMovies, loading, error, currentPage, allMovies, moviesPerPage } = this.state;
     const totalResults = allMovies.length; 
     const totalPages = Math.ceil(totalResults / moviesPerPage);
+
+//      console.log("Всего фильмов:", allMovies.length);
+//   console.log("Отображается фильмов:", displayedMovies.length);
+//   console.log("Фильмы:", displayedMovies.map(m => m.Title));
 
     return (
       <div className="main">
@@ -132,6 +149,7 @@ class Main extends React.Component {
             <Preloader />
           ) : displayedMovies.length > 0 ? (
             <>
+            <div ref={this.moviesContainerRef}/> {/*якорь */}
               <MovieList movies={displayedMovies} />
               {totalResults > moviesPerPage && (
                 <div className="pagination">
