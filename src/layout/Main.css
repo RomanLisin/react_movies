@@ -5,7 +5,7 @@
 }
 
 .search-form {
-    height: 8vh;
+    height: 4vh;
   display: flex;
   gap: 10px;
   padding: 15px 10px 8px;
@@ -33,4 +33,7 @@
 
 .search-button:hover {
   background-color: #007bff;
+}
+.search-button:active {
+  background: #0056b3; 
 }
